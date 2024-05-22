@@ -176,28 +176,23 @@ public:
             danhsachnguoithue = new hopdongthuexe[1];
             soluong = 0;
             kichthuoc = 1;
-
             string line;
             while (getline(infile, line)) {
                 size_t pos = line.find(',');
                 if (pos != string::npos) {
                     string name = line.substr(0, pos);
                     line.erase(0, pos + 1);
-
                     pos = line.find(',');
                     if (pos != string::npos) {
-                        string bienso = line.substr(0, pos);
-                        line.erase(0, pos + 1);
-
-                        pos = line.find(',');
-                        if (pos != string::npos) {
-                            int time = stoi(line.substr(0, pos));
-                            line.erase(0, pos + 1);
-
-                            string loai = line;
-
-                            themhopdong(hopdongthuexe(name, bienso, time, loai, 0, 0.0)); // Giá tr? m?c d?nh cho socho và giathue
-                        }
+                    string bienso = line.substr(0, pos);
+                    line.erase(0, pos + 1);
+                    pos = line.find(',');
+                    if (pos != string::npos) {
+                    int time = stoi(line.substr(0, pos));
+                    line.erase(0, pos + 1);
+                    string loai = line;
+                    themhopdong(hopdongthuexe(name, bienso, time, loai, 0, 0.0)); 
+                    }
                     }
                 }
             }
@@ -225,9 +220,9 @@ private:
 
 public:
     xulidulieu() {
-        danhsachcacxe[0] = thongtinxe("Toyota", 4, 500.0);
-        danhsachcacxe[1] = thongtinxe("Honda", 4, 450.0);
-        danhsachcacxe[2] = thongtinxe("Ford", 7, 700.0);
+        danhsachcacxe[0] = thongtinxe("Toyota", 4, 500000.0);
+        danhsachcacxe[1] = thongtinxe("Honda", 4, 450000.0);
+        danhsachcacxe[2] = thongtinxe("Ford", 7, 700000.0);
     }
 
     void xuatcacloaixe(int socho) const {
