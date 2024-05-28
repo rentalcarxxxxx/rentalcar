@@ -4,53 +4,22 @@
 
 using namespace std;
 
-class thongtinxe {
-private:
-    string loaixe;
-    int socho;
-    float giathue;
-
-public:
-    thongtinxe() : loaixe(), socho(0), giathue(0.0f) {}
-
-    thongtinxe(string _loaixe, int _socho, float _giathue) {
-        loaixe = _loaixe;
-        socho = _socho;
-        giathue = _giathue;
-    }
-
-    string chonxe() const {
-        return loaixe;
-    }
-
-    int chonsocho() const {
-        return socho;
-    }
-
-    float tinhtien(float songaythue) const {
-        return songaythue * giathue;
-    }
-
-    string getloaixe() const {
-        return loaixe;
-    }
-
-    void setloaixe(const string& loai) {
-        loaixe = loai;
-    }
-};
-
-class hopdongthuexe : public thongtinxe {
+class hopdongthuexe {
 private:
     string tennguoithue;
     string biensoxe;
     int thoigianthue;
+    string loaixe;
 
 public:
     hopdongthuexe() = default;
 
-    hopdongthuexe(string name, string bienso, int time, string loai, int socho, float giathue) 
-        : thongtinxe(loai, socho, giathue), tennguoithue(name), biensoxe(bienso), thoigianthue(time) {}
+    hopdongthuexe(string name, string bienso, int time, string loai) {
+        tennguoithue = name;
+        biensoxe = bienso;
+        thoigianthue = time;
+        loaixe = loai;
+    }
 
     string getten() const {
         return tennguoithue;
@@ -62,6 +31,10 @@ public:
 
     int getthoigianthue() const {
         return thoigianthue;
+    }
+
+    string getloaixe() const {
+        return loaixe;
     }
 
     void settennguoithue(const string& name) {
@@ -76,9 +49,12 @@ public:
         thoigianthue = time;
     }
 
+    void setloaixe(const string& loai) {
+        loaixe = loai;
+    }
+
     void xuatthongtin() const {
-        cout << "Nguoi thue: " << tennguoithue << ", Bien so xe: " << biensoxe << ", So ngay thue: " << thoigianthue 
-             << ", Loai xe: " << getloaixe() << endl;
+        cout << "Nguoi thue: " << tennguoithue << ", Bien so xe: " << biensoxe << ", So ngay thue: " << thoigianthue << ", Loai xe: " << loaixe << endl;
     }
 };
 
@@ -176,23 +152,28 @@ public:
             danhsachnguoithue = new hopdongthuexe[1];
             soluong = 0;
             kichthuoc = 1;
+
             string line;
             while (getline(infile, line)) {
                 size_t pos = line.find(',');
                 if (pos != string::npos) {
                     string name = line.substr(0, pos);
                     line.erase(0, pos + 1);
+
                     pos = line.find(',');
                     if (pos != string::npos) {
-                    string bienso = line.substr(0, pos);
-                    line.erase(0, pos + 1);
-                    pos = line.find(',');
-                    if (pos != string::npos) {
-                    int time = stoi(line.substr(0, pos));
-                    line.erase(0, pos + 1);
-                    string loai = line;
-                    themhopdong(hopdongthuexe(name, bienso, time, loai, 0, 0.0)); 
-                    }
+                        string bienso = line.substr(0, pos);
+                        line.erase(0, pos + 1);
+
+                        pos = line.find(',');
+                        if (pos != string::npos) {
+                            int time = stoi(line.substr(0, pos));
+                            line.erase(0, pos + 1);
+
+                            string loai = line;
+
+                            themhopdong(hopdongthuexe(name, bienso, time, loai));
+                        }
                     }
                 }
             }
@@ -213,30 +194,63 @@ public:
     }
 };
 
+class thongtincon {
+private:
+    string loaixe;
+    int socho;
+    float giathue;
+
+public:
+    thongtincon() : loaixe(), socho(0), giathue(0.0f) {}
+
+    thongtincon(string _loaixe, int _socho, float _giathue) {
+        loaixe = _loaixe;
+        socho = _socho;
+        giathue = _giathue;
+    }
+
+    string xechon() const {
+        return loaixe;
+    }
+
+    int chonsocho() const {
+        return socho;
+    }
+
+    float tinhtien(float songaythue) const {
+        return songaythue * giathue;
+    }
+};
+
 class xulidulieu {
 private:
-    static const int kichthuocxe = 3;
-    thongtinxe danhsachcacxe[kichthuocxe];
+    static const int kichthuocxe = 20;
+    thongtincon danhsachcacxe[kichthuocxe];
 
 public:
     xulidulieu() {
-        danhsachcacxe[0] = thongtinxe("Toyota", 4, 500000.0);
-        danhsachcacxe[1] = thongtinxe("Honda", 4, 450000.0);
-        danhsachcacxe[2] = thongtinxe("Ford", 7, 700000.0);
+        danhsachcacxe[0] = thongtincon("Toyota", 4, 500.0);
+        danhsachcacxe[1] = thongtincon("Honda", 4, 450.0);
+        danhsachcacxe[2] = thongtincon("Ford", 7, 700.0);
+         danhsachcacxe[3] = thongtincon(" huydai", 4, 500.0);
+          danhsachcacxe[4] = thongtincon("lamborghini", 4 , 700.0);
+           danhsachcacxe[5] = thongtincon("flat", 4, 500.0);
+           danhsachcacxe[6] = thongtincon ("infinti",5 , 900.0);
+            danhsachcacxe[2] = thongtincon(" jaguar", 5, 840.0);
     }
 
     void xuatcacloaixe(int socho) const {
         cout << "Danh sach cac xe voi so cho " << socho << ":\n";
         for (int i = 0; i < kichthuocxe; ++i) {
             if (danhsachcacxe[i].chonsocho() == socho) {
-                cout << danhsachcacxe[i].chonxe() << endl;
+                cout << danhsachcacxe[i].xechon() << endl;
             }
         }
     }
 
     float tinhtienthuexe(const string& loaixe, int songaythue) const {
         for (int i = 0; i < kichthuocxe; ++i) {
-            if (danhsachcacxe[i].chonxe() == loaixe) {
+            if (danhsachcacxe[i].xechon() == loaixe) {
                 return danhsachcacxe[i].tinhtien(songaythue);
             }
         }
@@ -248,7 +262,7 @@ int main() {
     quanlyhopdong quanly;
     xulidulieu xulyxe;
 
-    quanly.docdulieufile("danh_sach_hop_dong.txt");
+    quanly.docdulieufile("pbl.txt");
 
     int choice;
     do {
@@ -271,8 +285,7 @@ int main() {
         switch (choice) {
             case 1: {
                 string name, bienso, loaixe;
-                int thoigian, socho;
-                float giathue;
+                int thoigian;
                 cout << "Nhap ten nguoi thue: ";
                 getline(cin, name);
                 cout << "Nhap bien so xe: ";
@@ -282,7 +295,7 @@ int main() {
                 cout << "Nhap loai xe: ";
                 cin.ignore();
                 getline(cin, loaixe);
-                quanly.themhopdong(hopdongthuexe(name, bienso, thoigian, loaixe, socho, giathue));
+                quanly.themhopdong(hopdongthuexe(name, bienso, thoigian, loaixe));
                 break;
             }
             case 2:
@@ -304,7 +317,7 @@ int main() {
             }
             case 5: {
                 int socho;
-                cout << "Nhap so cho xe: ";
+                cout << "Nhap so cho xe ban muon thue : ";
                 cin >> socho;
                 xulyxe.xuatcacloaixe(socho);
                 break;
@@ -327,7 +340,7 @@ int main() {
                 break;
             }
             case 7:
-                quanly.luuvaofile("danh_sach_hop_dong.txt");
+                quanly.luuvaofile("pbl.txt");
                 break;
             case 8:
                 cout << "Tam biet! Hen gap lai.\n";
